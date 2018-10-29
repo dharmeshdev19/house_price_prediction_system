@@ -1,0 +1,471 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>Predict House Price System</h1>
+
+<form action="/predict" method="post" id="house_data_form" name="house_data_form" onsubmit="return checkInp()">
+  <div class="form-block">
+    <label for="total_area">Total Area in Sqft</label>
+    <input type="text" name="total_area">
+  </div>
+
+  <div class="form-block">
+    <label for="livable_area">Livable Area in Sqft</label>
+    <input type="text" name="livable_area">
+  </div>
+
+  <div class="form-block">
+    <label for="num_bedrooms">Number of Bedrooms</label>
+    <select name="num_bedrooms" id="num_bedrooms">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+    </select>
+  </div>
+
+  <div class="form-block">
+    <label for="num_bathrooms">Number of Bathrooms</label>
+    <select name="num_bathrooms" id="num_bathrooms">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+    </select>
+  </div>
+
+  <div class="form-block">
+    <label for="flat_condition">Flat Condition</label>
+    <select name="flat_condition" id="flat_condition">
+      <option value="0">Resale</option>
+      <option value="1">New</option>
+    </select>
+  </div>
+
+  <div class="form-block">
+    <label for="flooring_type">Flooring Type</label>
+    <select name="flooring_type" id="flooring_type">
+      <option value="0">Ceramic</option>
+      <option value="1">Granite</option>
+      <option value="2">Marble Flooring</option>
+      <option value="3">Marbonite</option>
+      <option value="4">Mosaic Tiles</option>
+      <option value="5">Normal Tiles</option>
+      <option value="6">Vetrified</option>
+      <option value="7">Vitrified Tiles</option>
+      <option value="8">Wooden</option>
+    </select>
+  </div>
+
+  <div class="form-block">
+    <label for="parking_available">Parking Available</label>
+    <select name="parking_available" id="parking_available">
+      <option value="0">No</option>
+      <option value="1">Yes</option>
+    </select>
+  </div>
+
+  <div class="form-block">
+    <label for="furnishing_state">Furnishing State</label>
+    <select name="furnishing_state" id="furnishing_state">
+      <option value="0">Not Furnished</option>
+      <option value="1">Semi Furnished</option>
+      <option value="2">Fully Furnished</option>
+    </select>
+  </div>
+
+  <div class="form-block">
+    <label for="furnishing_state">Year Built</label>
+    <select name="year_built" id="year_built">
+      <option value="0">1983</option>
+      <option value="1">1986</option>
+      <option value="2">1988</option>
+      <option value="3">1989</option>
+      <option value="4">1990</option>
+      <option value="5">1991</option>
+      <option value="6">1992</option>
+      <option value="7">1993</option>
+      <option value="8">1994</option>
+      <option value="9">1995</option>
+      <option value="10">1996</option>
+      <option value="11">1998</option>
+      <option value="12">1999</option>
+      <option value="13">2000</option>
+      <option value="14">2001</option>
+      <option value="15">2002</option>
+      <option value="16">2003</option>
+      <option value="17">2004</option>
+      <option value="18">2005</option>
+      <option value="19">2006</option>
+      <option value="20">2007</option>
+      <option value="21">2008</option>
+      <option value="22">2009</option>
+      <option value="23">2010</option>
+      <option value="24">2011</option>
+      <option value="25">2012</option>
+      <option value="26">2013</option>
+      <option value="27">2014</option>
+      <option value="28">2015</option>
+      <option value="29">2016</option>
+      <option value="30">2017</option>
+      <option value="31">2018</option>
+      <option value="32">2018</option>
+      <option value="32">Under Construction</option>
+    </select>
+  </div>
+
+  <div class="form-block">
+    <label for="location">Location</label>
+    <select name="location" id="location">
+      <option value="0">Aarey Milk Colony</option>
+      <option value="1">Aarey Road</option>
+      <option value="2">Agashi</option>
+      <option value="3">Agripada</option>
+      <option value="4">Alibag</option>
+      <option value="5">Altamount Road</option>
+      <option value="6">Ambernath</option>
+      <option value="7">Ambernath East</option>
+      <option value="8">Ambernath West</option>
+      <option value="9">Ambivali</option>
+      <option value="10">Amboli</option>
+      <option value="11">Andheri East</option>
+      <option value="12">Andheri West</option>
+      <option value="13">Andheri-Kurla Road</option>
+      <option value="14">Antop Hill</option>
+      <option value="15">Asangaon</option>
+      <option value="16">Atgaon</option>
+      <option value="17">Azad Nagar</option>
+      <option value="18">Badlapur East</option>
+      <option value="19">Badlapur West</option>
+      <option value="20">Balaji Nagar</option>
+      <option value="21">Balkum</option>
+      <option value="22">Bandra East</option>
+      <option value="23">Bandra Kurla Complex</option>
+      <option value="24">Bandra West</option>
+      <option value="25">Bangur Nagar</option>
+      <option value="26">Beverly Park</option>
+      <option value="27">Bhadane</option>
+      <option value="28">Bhandup East</option>
+      <option value="29">Bhandup West</option>
+      <option value="30">Bhayandar</option>
+      <option value="31">Bhayandar East</option>
+      <option value="32">Bhayandar West</option>
+      <option value="33">Bhayander East</option>
+      <option value="34">Bhivpuri</option>
+      <option value="35">Bhiwandi</option>
+      <option value="36">Bhuleshwar</option>
+      <option value="37">Boisar</option>
+      <option value="38">Borivali East</option>
+      <option value="39">Borivali West</option>
+      <option value="40">Breach Candy</option>
+      <option value="41">Byculla East</option>
+      <option value="42">Byculla West</option>
+      <option value="43">Carter Road</option>
+      <option value="44">Chakala</option>
+      <option value="45">Chandivali</option>
+      <option value="46">Charkop</option>
+      <option value="47">Chedda Nagar</option>
+      <option value="48">Chembur</option>
+      <option value="49">Chembur Colony</option>
+      <option value="50">Chikuwadi</option>
+      <option value="51">Chinchpokli</option>
+      <option value="52">Chira Bazar</option>
+      <option value="53">Chuna Bhatti</option>
+      <option value="54">Colaba</option>
+      <option value="55">Cuffe Parade</option>
+      <option value="56">Dadar East</option>
+      <option value="57">Dadar West</option>
+      <option value="58">Dahanu Road</option>
+      <option value="59">Dahisar</option>
+      <option value="60">Dahisar East</option>
+      <option value="61">Dahisar West</option>
+      <option value="62">Dharavi</option>
+      <option value="63">Dindoshi</option>
+      <option value="64">Dive</option>
+      <option value="65">Dombivli</option>
+      <option value="66">Dombivli East</option>
+      <option value="67">Dombivli West</option>
+      <option value="68">Dongri</option>
+      <option value="69">Evershine Nagar</option>
+      <option value="70">Gamdevi</option>
+      <option value="71">Gandhi Nagar</option>
+      <option value="72">Ghansoli</option>
+      <option value="73">Ghatkopar East</option>
+      <option value="74">Ghatkopar West</option>
+      <option value="75">Ghodbandar</option>
+      <option value="76">Ghodbunder</option>
+      <option value="77">Girgaon</option>
+      <option value="78">Gokuldam</option>
+      <option value="79">Gokuldham Colony</option>
+      <option value="80">Gorai</option>
+      <option value="81">Goregaon East</option>
+      <option value="82">Goregaon West</option>
+      <option value="83">Govandi</option>
+      <option value="84">Govind Nagar</option>
+      <option value="85">Grant Road East</option>
+      <option value="86">Grant Road West</option>
+      <option value="87">Gulmohar Road</option>
+      <option value="88">Hanuman Road</option>
+      <option value="89">IC Colony</option>
+      <option value="90">IIT Powai</option>
+      <option value="91">Iit Powai</option>
+      <option value="92">J B Nagar</option>
+      <option value="93">Jogeshwari East</option>
+      <option value="94">Jogeshwari West</option>
+      <option value="95">Jogeswari West</option>
+      <option value="96">Juhu</option>
+      <option value="97">Kalbadevi</option>
+      <option value="98">Kalher</option>
+      <option value="99">Kalina</option>
+      <option value="100">Kalyan East</option>
+      <option value="101">Kalyan West</option>
+      <option value="102">Kalyan-Shil Road</option>
+      <option value="103">Kamatghar</option>
+      <option value="104">Kanakia Road</option>
+      <option value="105">Kandivali East</option>
+      <option value="106">Kandivali West</option>
+      <option value="107">Kandvali east</option>
+      <option value="108">Kaner</option>
+      <option value="109">Kanjur Marg East</option>
+      <option value="110">Kanjurmarg</option>
+      <option value="111">Kanjurmarg East</option>
+      <option value="112">Kannamwar Nagar</option>
+      <option value="113">Karjat</option>
+      <option value="114">Kasara</option>
+      <option value="115">Kasheli</option>
+      <option value="116">Kashimira</option>
+      <option value="117">Khadakpada</option>
+      <option value="118">Khar East</option>
+      <option value="119">Khar West</option>
+      <option value="120">Kharbao</option>
+      <option value="121">Kharghar</option>
+      <option value="122">Khetwadi</option>
+      <option value="123">Khopoli</option>
+      <option value="124">Kon</option>
+      <option value="125">Kurla East</option>
+      <option value="126">Kurla West</option>
+      <option value="127">LBS Marg</option>
+      <option value="128">Lal Baug</option>
+      <option value="129">Lalbaug</option>
+      <option value="130">Lbs Marg</option>
+      <option value="131">Lbs Marg-Mulund</option>
+      <option value="132">Link Road</option>
+      <option value="133">Linking Road</option>
+      <option value="134">Lokhandwala</option>
+      <option value="135">Lower Parel</option>
+      <option value="136">M A Marg</option>
+      <option value="137">Madh</option>
+      <option value="138">Mahalaxmi</option>
+      <option value="139">Mahavir Nagar</option>
+      <option value="140">Mahim</option>
+      <option value="141">Mahim East</option>
+      <option value="142">Malad East</option>
+      <option value="143">Malad West</option>
+      <option value="144">Malvani</option>
+      <option value="145">Mandvi</option>
+      <option value="146">Mankhurd</option>
+      <option value="147">Marine Lines</option>
+      <option value="148">Marol</option>
+      <option value="149">Matunga East</option>
+      <option value="150">Matunga West</option>
+      <option value="151">Mazgaon</option>
+      <option value="152">Mira Bhayandar</option>
+      <option value="153">Mira Road</option>
+      <option value="154">Mira Road East</option>
+      <option value="155">Mulund East</option>
+      <option value="156">Mulund West</option>
+      <option value="157">Mumbai</option>
+      <option value="158">Mumbai - Nasik Highway</option>
+      <option value="159">Mumbai Central</option>
+      <option value="160">Mumbai G.p.o.</option>
+      <option value="161">Murbad Karjat Road</option>
+      <option value="162">Murbad Road</option>
+      <option value="163">Nagari Niwara Post Office</option>
+      <option value="164">Nagpada</option>
+      <option value="165">Nahur</option>
+      <option value="166">Nahur East</option>
+      <option value="167">Nahur West</option>
+      <option value="168">Naigaon East</option>
+      <option value="169">Naigaon West</option>
+      <option value="170">Nalasopara East</option>
+      <option value="171">Nalasopara West</option>
+      <option value="172">Navapada</option>
+      <option value="173">Navghar Road</option>
+      <option value="174">Naya Nagar</option>
+      <option value="175">Nehru Nagar</option>
+      <option value="176">Neral</option>
+      <option value="177">Nerul</option>
+      <option value="178">Netaji Nagar</option>
+      <option value="179">Null Bazar</option>
+      <option value="180">Old Panvel</option>
+      <option value="181">Orlem Malad</option>
+      <option value="182">Oshiwara</option>
+      <option value="183">Palghar</option>
+      <option value="184">Palghar Saphale</option>
+      <option value="185">Pali Hill</option>
+      <option value="186">Panth Nagar</option>
+      <option value="187">Panvel</option>
+      <option value="188">Parel</option>
+      <option value="189">Peddar Road</option>
+      <option value="190">Poonam Nagar</option>
+      <option value="191">Powai</option>
+      <option value="192">Prabhadevi</option>
+      <option value="193">Pydhonie</option>
+      <option value="194">Raigad</option>
+      <option value="195">Raigad# karjat</option>
+      <option value="196">Ramabai Ambedkar Nagar</option>
+      <option value="197">Ramnagar</option>
+      <option value="198">Roha</option>
+      <option value="199">S V Road</option>
+      <option value="200">SEEPZ</option>
+      <option value="201">Sakinaka</option>
+      <option value="202">Sakinaka 90 Feet Road</option>
+      <option value="203">Santacruz East</option>
+      <option value="204">Santacruz West</option>
+      <option value="205">Sewri</option>
+      <option value="206">Shahad</option>
+      <option value="207">Shahapur</option>
+      <option value="208">Shastri Nagar</option>
+      <option value="209">Shelu</option>
+      <option value="210">Shivaji Park</option>
+      <option value="211">Sindhi Society</option>
+      <option value="212">Sion</option>
+      <option value="213">Sion East</option>
+      <option value="214">Sion West</option>
+      <option value="215">Tardeo</option>
+      <option value="216">Temghar Naka</option>
+      <option value="217">Thakurdwar</option>
+      <option value="218">Thakurli</option>
+      <option value="219">Tilak Nagar</option>
+      <option value="220">Titwala</option>
+      <option value="221">Triveni Nagar</option>
+      <option value="222">Tulsiwadi</option>
+      <option value="223">Ulhasnagar</option>
+      <option value="224">Umerkhadi</option>
+      <option value="225">Umroli</option>
+      <option value="226">Upper Worli</option>
+      <option value="227">VP Road</option>
+      <option value="228">Vakola</option>
+      <option value="229">Vangani</option>
+      <option value="230">Vasai East</option>
+      <option value="231">Vasai Road</option>
+      <option value="232">Vasai West</option>
+      <option value="233">Vashi</option>
+      <option value="234">Vasind</option>
+      <option value="235">Veera Desai Road</option>
+      <option value="236">Versova</option>
+      <option value="237">Vichumbe</option>
+      <option value="238">Vidya Nagari</option>
+      <option value="239">Vidya Vihar</option>
+      <option value="240">Vidyavihar West</option>
+      <option value="241">Vijay Nagar</option>
+      <option value="242">Vikhroli East</option>
+      <option value="243">Vikhroli West</option>
+      <option value="244">Vile Parle East</option>
+      <option value="245">Vile Parle West</option>
+      <option value="246">Virar East</option>
+      <option value="247">Virar West</option>
+      <option value="248">Vitthalwadi</option>
+      <option value="249">Wadala East</option>
+      <option value="250">Wadala West</option>
+      <option value="251">Walkeshwar</option>
+      <option value="252">Warden Road</option>
+      <option value="253">Western Express Highway</option>
+      <option value="254">Worli</option>
+      <option value="255">Yari Road</option>
+      <option value="256">chembur Colony</option>
+      <option value="257">vidyavihar West</option>
+    </select>
+  </div>
+
+  <div class="form-block">
+    <label for="property_on">Propery Floor Number</label>
+    <select name="property_on" id="property_on">
+      <option value="0">0</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+      <option value="11">11</option>
+      <option value="12">12</option>
+      <option value="13">13</option>
+      <option value="14">14</option>
+      <option value="15">15</option>
+      <option value="16">16</option>
+      <option value="17">17</option>
+      <option value="18">18</option>
+      <option value="19">19</option>
+      <option value="20">20</option>
+      <option value="21">21</option>
+      <option value="22">22</option>
+      <option value="23">23</option>
+      <option value="24">24</option>
+      <option value="25">25</option>
+      <option value="26">26</option>
+      <option value="27">27</option>
+      <option value="28">28</option>
+      <option value="29">29</option>
+      <option value="30">30</option>
+      <option value="31">31</option>
+      <option value="32">32</option>
+      <option value="33">33</option>
+      <option value="34">34</option>
+      <option value="35">35</option>
+      <option value="36">36</option>
+      <option value="37">37</option>
+      <option value="38">38</option>
+      <option value="39">39</option>
+    </select>
+  </div>
+
+
+  <div class="form-block">
+    <input type="submit" value="Predict">
+  </div>
+
+
+</form>
+
+<script type="text/javascript">
+
+function checkInp()
+{
+  var total_area = document.forms["house_data_form"]["total_area"].value;
+  var livable_area = document.forms["house_data_form"]["livable_area"].value;
+
+  if(total_area == undefined || total_area == '')
+  {
+    alert("Please provide total area value");
+    return false;
+  }
+  else if(isNaN(total_area))
+  {
+    alert("Please provide numeric value in total area input");
+    return false;
+  }
+
+  if(livable_area == undefined || livable_area == '')
+  {
+    alert("Please provide livable area value");
+    return false;
+  }
+  else if(isNaN(livable_area))
+  {
+    alert("Please provide numeric value in livable area input");
+    return false;
+  }
+}
+
+
+</script>
+
+{% endblock %}
