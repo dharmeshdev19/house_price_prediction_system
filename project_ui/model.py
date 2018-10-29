@@ -1,12 +1,12 @@
-import MySQLdb
-
+import pymysql
+import db_config
 
 
 class DBModel:
-    hostname = "127.0.0.1"
-    username = "root"
-    password = "root"
-    database = "custom_predict_house_system"
+    hostname = db_config.hostname
+    username = db_config.username
+    password = db_config.password
+    database = db_config.database
 
     def __init__(self):
         self.open_db_connection()
@@ -29,7 +29,7 @@ class DBModel:
     def open_db_connection(self):
         hostname, username, password, database = self.hostname, self.username, self.password, self.database
         # self.conn_obj = MySQLdb.connect(host=hostname, user=username, passwd=password, db=database, port=3306, use_unicode=True, charset="utf8")
-        self.conn_obj = MySQLdb.connect(host=hostname, user=username, passwd=password, db=database,use_unicode=True, charset="utf8")
+        self.conn_obj = pymysql.connect(host=hostname, user=username, passwd=password, db=database,use_unicode=True, charset="utf8")
         self.cursor_obj = self.conn_obj.cursor()
 
     # end of method

@@ -286,3 +286,8 @@ header {
 .leaflet-popup-content p {
   margin: 10px 0 ;
 }
+
+
+div.form-block{
+  margin: 20px 0 20px 15px;
+}
