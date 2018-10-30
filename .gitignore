@@ -1,1 +1,2 @@
 project_ui/db_config.py
+*.pyc
